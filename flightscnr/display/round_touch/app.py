@@ -4524,15 +4524,16 @@ class RoundTouchDisplay:
             self.settings_page = info.PAGE_MAIN
             self._note_activity()
             self._safe_draw()
-        elif swipe == input_handler.SWIPE_LEFT and self.screen == SCREEN_SETTINGS:
+        elif swipe == input_handler.SWIPE_RIGHT and self.screen == SCREEN_SETTINGS:
             # Touch builds walk settings pages by tapping the breadcrumb, which
             # needs coordinates an arcade stick cannot supply — step the pages.
+            # Direction follows the page dots: right advances the lit dot right.
             self._set_settings_page(min(self.settings_page + 1, info.PAGE_COUNT - 1))
             self._note_activity()
             self._safe_draw()
-        elif swipe == input_handler.SWIPE_RIGHT and self.screen == SCREEN_SETTINGS:
-            # Page 1 backs out to About, which now sits beside Settings; deeper
-            # pages step back one. Cabinets reach the radar with their own button.
+        elif swipe == input_handler.SWIPE_LEFT and self.screen == SCREEN_SETTINGS:
+            # Left walks the dots back, and off page 1 leaves for About, which
+            # now sits beside Settings. Cabinets reach the radar by its button.
             if self.settings_page <= info.PAGE_MAIN:
                 self._open_screen(SCREEN_DETAILS)
             else:
@@ -4542,12 +4543,12 @@ class RoundTouchDisplay:
         elif self.screen == SCREEN_FLIGHT and swipe in (
             input_handler.SWIPE_LEFT, input_handler.SWIPE_RIGHT,
         ):
-            # Step the card like the PREV/NEXT footer taps, so panel buttons
-            # walk the flights without aiming at the footer.
+            # Step the card like the PREV/NEXT footer taps, right advancing the
+            # lit page dot rightwards, so panel buttons need no aiming.
             self._sync_selected_flight_index()
             ordered = self._ordered_flights()
             if ordered:
-                step = 1 if swipe == input_handler.SWIPE_LEFT else -1
+                step = 1 if swipe == input_handler.SWIPE_RIGHT else -1
                 self._select_flight_at_index(self.flight_index + step, ordered)
                 self._scroll.reset()
                 self._maybe_enrich_flight_detail()
@@ -4563,7 +4564,7 @@ class RoundTouchDisplay:
             self._sync_selected_fire_index()
             ordered = wildfire_overlay.fires_by_distance()
             if ordered:
-                step = 1 if swipe == input_handler.SWIPE_LEFT else -1
+                step = 1 if swipe == input_handler.SWIPE_RIGHT else -1
                 self._select_fire_at_index(self.fire_index + step, ordered)
                 self._scroll.reset()
                 self._maybe_fetch_fire_map()

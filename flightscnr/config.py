@@ -407,6 +407,10 @@ def _btn_env(name: str) -> int:
 # builds are unaffected; read them off the app log (joy event ... button=N).
 JOYSTICK_BTN_SWIPE_LEFT = _btn_env("JOYSTICK_BTN_SWIPE_LEFT")
 JOYSTICK_BTN_SWIPE_RIGHT = _btn_env("JOYSTICK_BTN_SWIPE_RIGHT")
+# Up/down reach About, the clock, and page scrolling — and since Settings moved
+# beside About, they are the only way to reach it without a touchscreen.
+JOYSTICK_BTN_SWIPE_UP = _btn_env("JOYSTICK_BTN_SWIPE_UP")
+JOYSTICK_BTN_SWIPE_DOWN = _btn_env("JOYSTICK_BTN_SWIPE_DOWN")
 JOYSTICK_BTN_RADAR = _btn_env("JOYSTICK_BTN_RADAR")
 JOYSTICK_BTN_ZOOM_IN = _btn_env("JOYSTICK_BTN_ZOOM_IN")
 JOYSTICK_BTN_ZOOM_OUT = _btn_env("JOYSTICK_BTN_ZOOM_OUT")
